@@ -22,7 +22,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY . .
-RUN pip install --no-cache-dir -e ./backend
+
+# Diagnostic: prove what actually landed in the image before pip touches it.
+RUN echo "--- /app ---" && ls -la /app \
+    && echo "--- /app/backend ---" && ls -la /app/backend \
+    && echo "--- pyproject.toml ---" && cat /app/backend/pyproject.toml | head -5
+
+RUN pip install --no-cache-dir -e /app/backend
 
 ENV PYTHONUNBUFFERED=1 \
     GEOVAX_OUT=/app/deploy_data/chennai_metro
