@@ -1,0 +1,308 @@
+{
+  "run_id": "d41789a8-375e-4c24-9ad9-cad34853d620",
+  "generated_at": "2026-09-06T16:49:51.121055+00:00",
+  "aoi": {
+    "name": "Chennai Nungambakkam-Kilpauk",
+    "bbox": [
+      80.225,
+      13.045,
+      80.265,
+      13.095
+    ]
+  },
+  "stages": {
+    "ingest": {
+      "TNGIS_CADASTRE": {
+        "features_in_aoi": 14253,
+        "declared_accuracy_m": 3.0,
+        "coordinate_precision_digits": 7,
+        "implied_precision_m": 0.0108,
+        "invalid_geometries_in_sample": 0,
+        "warnings": []
+      },
+      "NCSCM_CADASTRE": {
+        "features_in_aoi": 1826,
+        "declared_accuracy_m": 5.0,
+        "coordinate_precision_digits": 7,
+        "implied_precision_m": 0.0108,
+        "invalid_geometries_in_sample": 3,
+        "warnings": []
+      },
+      "GCC_BUILDINGS": {
+        "features_in_aoi": 55810,
+        "declared_accuracy_m": 1.0,
+        "coordinate_precision_digits": 7,
+        "implied_precision_m": 0.0108,
+        "invalid_geometries_in_sample": 4,
+        "warnings": []
+      },
+      "GOOGLE_OPEN_BUILDINGS": {
+        "features_in_aoi": 70776,
+        "declared_accuracy_m": 1.8,
+        "coordinate_precision_digits": 12,
+        "implied_precision_m": 0.0,
+        "invalid_geometries_in_sample": 0,
+        "warnings": []
+      },
+      "MS_BUILDINGS_TN": {
+        "features_in_aoi": 0,
+        "declared_accuracy_m": 2.0,
+        "coordinate_precision_digits": 0,
+        "implied_precision_m": 108466.8756,
+        "invalid_geometries_in_sample": 0,
+        "warnings": []
+      }
+    },
+    "schema_map": {
+      "TNGIS_CADASTRE": {
+        "columns": 12,
+        "mapped": 5,
+        "crosswalk": {
+          "district_code": "district_lgd",
+          "lgd_taluk_code": "taluk_lgd",
+          "kide": "survey_number",
+          "lgd_village_code": "village_lgd",
+          "sub_division": "subdivision"
+        },
+        "needs_review": [
+          "'lgd_district_code' -> 'state_lgd' at 0.544 (lexical 0.86, values 0.70, distribution 0.00, structure 0.00); alias~lgd_state_code; 100% of values match the lgd_code/integer pattern; low cardinality (1 distinct)",
+          "'taluk_code' -> 'state_lgd' at 0.516 (lexical 0.78, values 0.70, distribution 0.00, structure 0.00); alias~state_code; 100% of values match the lgd_code/integer pattern; low cardinality (5 distinct)",
+          "'village_code' -> 'state_lgd' at 0.509 (lexical 0.76, values 0.70, distribution 0.00, structure 0.00); alias~lgd_state_code; 100% of values match the lgd_code/integer pattern; low cardinality (14 distinct)",
+          "'is_active' -> 'max_height_m' at 0.475 (lexical 0.55, values 0.80, distribution 0.00, structure 0.00); 100% of values match the decimal/integer pattern; values within the expected range (0.0, 350.0)",
+          "'taluk_code' -> 'ward' at 0.469 (lexical 0.53, values 0.70, distribution 0.00, structure 0.30); 100% of values match the integer/code_alnum pattern; low cardinality (5 distinct)"
+        ]
+      },
+      "NCSCM_CADASTRE": {
+        "columns": 7,
+        "mapped": 4,
+        "crosswalk": {
+          "District": "district_name",
+          "Taluk": "taluk_name",
+          "Survey_Number": "survey_number",
+          "Village": "village_name"
+        },
+        "needs_review": [
+          "'OBJECTID' -> 'door_number' at 0.493 (lexical 0.71, values 0.70, distribution 0.00, structure 0.00); alias~property_id; 100% of values match the door_number/gcc_gis_id/code_alnum pattern; near-unique (1.00 distinct ratio)",
+          "'OBJECTID' -> 'taluk_lgd' at 0.481 (lexical 0.55, values 0.55, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern",
+          "'OBJECTID' -> 'village_lgd' at 0.481 (lexical 0.55, values 0.55, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern",
+          "'OBJECTID' -> 'district_lgd' at 0.477 (lexical 0.54, values 0.55, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern",
+          "'OBJECTID' -> 'ward' at 0.473 (lexical 0.53, values 0.55, distribution 0.00, structure 0.80); 100% of values match the integer/code_alnum pattern"
+        ]
+      },
+      "GCC_BUILDINGS": {
+        "columns": 13,
+        "mapped": 6,
+        "crosswalk": {
+          "ward_number": "ward",
+          "zone_number": "zone",
+          "gcc_gis_id": "door_number",
+          "area_name": "locality",
+          "road_name": "street",
+          "corporation": "ulb_code"
+        },
+        "needs_review": [
+          "'area_id' -> 'taluk_lgd' at 0.552 (lexical 0.60, values 0.70, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern; low cardinality (21 distinct)",
+          "'area_id' -> 'district_lgd' at 0.527 (lexical 0.53, values 0.70, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern; low cardinality (21 distinct)",
+          "'area_id' -> 'recorded_extent_m2' at 0.523 (lexical 0.85, values 0.65, distribution 0.00, structure 0.00); alias~area_recorded; 100% of values match the decimal/integer pattern",
+          "'locality_id' -> 'village_lgd' at 0.523 (lexical 0.67, values 0.55, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern",
+          "'road_id' -> 'district_lgd' at 0.506 (lexical 0.62, values 0.55, distribution 0.00, structure 0.80); 100% of values match the lgd_code/integer pattern"
+        ]
+      },
+      "GOOGLE_OPEN_BUILDINGS": {
+        "columns": 4,
+        "mapped": 1,
+        "crosswalk": {
+          "confidence": "confidence"
+        },
+        "needs_review": [
+          "'gob_id' -> 'door_number' at 0.476 (lexical 0.66, values 0.70, distribution 0.00, structure 0.00); 100% of values match the door_number/gcc_gis_id/code_alnum pattern; near-unique (1.00 distinct ratio)",
+          "'area_in_meters' -> 'recorded_extent_m2' at 0.463 (lexical 0.67, values 0.65, distribution 0.00, structure 0.00); 100% of values match the decimal/integer pattern"
+        ]
+      }
+    },
+    "reproject": {
+      "TNGIS_CADASTRE": {
+        "reprojected": 14253,
+        "target_crs": "EPSG:32644"
+      },
+      "NCSCM_CADASTRE": {
+        "reprojected": 1826,
+        "target_crs": "EPSG:32644"
+      },
+      "GCC_BUILDINGS": {
+        "reprojected": 55810,
+        "target_crs": "EPSG:32644"
+      },
+      "GOOGLE_OPEN_BUILDINGS": {
+        "reprojected": 70776,
+        "target_crs": "EPSG:32644"
+      },
+      "MS_BUILDINGS_TN": {
+        "reprojected": 0,
+        "target_crs": "EPSG:32644"
+      }
+    },
+    "topology": {
+      "TNGIS_CADASTRE": {
+        "validation_before": "14253 features: 2 fatal, 150 errors, 34 warnings; planar partition error 0.1152% (overlap 152.2 m\u00b2, gap 13,951.5 m\u00b2)",
+        "violation_counts": {
+          "ring_orientation": 14257,
+          "duplicate_vertex": 30,
+          "spike": 43,
+          "multipart_parcel": 1,
+          "sliver": 59,
+          "invalid_geometry": 2,
+          "micro_area": 3,
+          "gap": 48
+        },
+        "repair": "711 repairs, 0 refused; planar partition error not measured -> not measured; 2,811.32 m\u00b2 of boundary moved",
+        "repairs_refused": 0
+      },
+      "NCSCM_CADASTRE": {
+        "validation_before": "1826 features: 0 fatal, 7 errors, 13 warnings; planar partition error 0.0497% (overlap 0.0 m\u00b2, gap 4,970.3 m\u00b2)",
+        "violation_counts": {
+          "ring_orientation": 1826,
+          "duplicate_vertex": 13,
+          "spike": 1,
+          "gap": 6
+        },
+        "repair": "20 repairs, 0 refused; planar partition error not measured -> not measured; 35.25 m\u00b2 of boundary moved",
+        "repairs_refused": 0
+      },
+      "GCC_BUILDINGS": {
+        "validation_before": "55810 features: 57 fatal, 278 errors, 817 warnings; planar partition error 0.0000% (overlap 0.0 m\u00b2, gap 0.0 m\u00b2)",
+        "violation_counts": {
+          "ring_orientation": 55805,
+          "duplicate_vertex": 738,
+          "spike": 216,
+          "micro_area": 79,
+          "sliver": 62,
+          "invalid_geometry": 57
+        }
+      },
+      "GOOGLE_OPEN_BUILDINGS": {
+        "extraction_qc_dropped": {
+          "below_minimum_area": 414,
+          "too_thin_to_be_a_building": 12
+        },
+        "regularisation": "70,286 of 70,350 footprints squared (63 genuinely non-rectilinear, 0 refused because squaring would have moved the area too far); vertices 394,780 -> 393,734 (0.3% fewer); mean area change -0.00%",
+        "validation_before": "70776 features: 0 fatal, 1 errors, 0 warnings; planar partition error 0.0000% (overlap 0.0 m\u00b2, gap 0.0 m\u00b2)",
+        "violation_counts": {
+          "sliver": 1
+        }
+      },
+      "MS_BUILDINGS_TN": {
+        "extraction_qc_dropped": {},
+        "regularisation": "0 of 0 footprints squared (0 genuinely non-rectilinear, 0 refused because squaring would have moved the area too far); vertices 0 -> 0 (0.0% fewer); mean area change +0.00%",
+        "validation_before": "0 features: 0 fatal, 0 errors, 0 warnings; planar partition error 0.0000% (overlap 0.0 m\u00b2, gap 0.0 m\u00b2)",
+        "violation_counts": {}
+      }
+    },
+    "match": {
+      "TNGIS_CADASTRE->NCSCM_CADASTRE": {
+        "candidate_pairs": 19744,
+        "accepted": 1465,
+        "registration": "systematic offset of 3.41 m on a bearing of 309\u00b0 (dx -2.65 m, dy +2.14 m) estimated from 469 confident pairs, residual RMS 9.05 m",
+        "assignment": "1,465 accepted of 19,744 candidate pairs across 1,404 components (largest 2); cardinality: 0:1 426, 1:0 12,788, 1:1 1,338, N:1 132; unmatched 12,788 left / 426 right; mean p=0.998",
+        "model": "trained on 5,484 weakly-labelled pairs (853 positive / 4,631 negative) drawn from 19,744 candidates; 14,260 abstained. Self-training added 576 positive and 13,585 negative pseudo-labels. 5-fold CV: accuracy 0.9996, precision 0.9988, recall 0.9988, AUC 1.0000, calibration error 0.0002",
+        "seconds": 39.8
+      },
+      "GCC_BUILDINGS->GOOGLE_OPEN_BUILDINGS": {
+        "candidate_pairs": 350750,
+        "accepted": 34697,
+        "registration": "systematic offset of 1.51 m on a bearing of 73\u00b0 (dx +1.44 m, dy +0.45 m) estimated from 5226 confident pairs, residual RMS 2.51 m",
+        "assignment": "34,697 accepted of 350,750 candidate pairs across 34,235 components (largest 2); cardinality: 0:1 35,857, 1:0 21,415, 1:1 33,723, 1:N 616, N:1 408; unmatched 21,415 left / 35,857 right; mean p=0.999",
+        "model": "trained on 23,034 weakly-labelled pairs (10,637 positive / 12,397 negative) drawn from 350,750 candidates; 327,716 abstained. Self-training added 24,223 positive and 184,272 negative pseudo-labels. 5-fold CV: accuracy 0.9999, precision 0.9998, recall 1.0000, AUC 1.0000, calibration error 0.0002",
+        "seconds": 101.1
+      }
+    },
+    "cluster": {
+      "entities": 106077,
+      "corroborated_by_2_or_more_sources": 35591,
+      "single_source_only": 70486,
+      "corroboration_rate": 0.3355,
+      "by_source_count": {
+        "2": 35591,
+        "1": 70486
+      },
+      "mean_support": 0.3337,
+      "note": "Single-source entities are retained in full. Dropping them would delete land from the cadastre; they are instead published with a low source-agreement score so the gap is visible."
+    },
+    "resolve": {
+      "entities": 106077,
+      "conflicts": 36987,
+      "escalated": 21192,
+      "auto_resolution_rate": 0.427,
+      "strategies": {
+        "fusion": 36148,
+        "single_source": 522142,
+        "unanimous": 4
+      },
+      "rules_fired": {
+        "R-GEO-01": 839
+      },
+      "queue": "5,000 cases queued in 2 batches (~125.0 officer-hours at 90 s per decision, or 3750 minutes per batch); 0 decided, 0.0% agreed with the platform proposal"
+    },
+    "assemble": {
+      "parcels": 14614,
+      "buildings": 91463,
+      "distinct_ulpins": 14614,
+      "ulpin_collisions_resolved": 2,
+      "ulpin_uniqueness": "guaranteed unique; 2 snapped-cell collisions were disambiguated by an identity-stable nonce"
+    },
+    "structures": {
+      "buildings_assigned_to_parcels": 56166,
+      "assignment_rate": 0.6141,
+      "parcels_with_buildings": 10164,
+      "parcels_over_100pct_coverage": 2961,
+      "note": "Ground coverage above 100% is not a bug: it means the harmonised footprints extend beyond the cadastral parcel, which is either a boundary error or a genuine set-back violation. Both need a human.",
+      "mean_structure_height_m": null
+    },
+    "change": {
+      "TNGIS_CADASTRE->NCSCM_CADASTRE": "14,679 changes detected, 1,402 actionable (62 suppressed as layer-wide re-registration rather than real change, after removing a systematic offset of 4.42 m); 6,939,540 m\u00b2 added, 8,967,510 m\u00b2 removed. Breakdown: source_omission 12,788, geometric_disagreement 1,271, source_commission 426, amalgamation 131, positional_only 62, no_change 1",
+      "GCC_BUILDINGS->GOOGLE_OPEN_BUILDINGS": "91,969 changes detected, 33,530 actionable (860 suppressed as layer-wide re-registration rather than real change, after removing a systematic offset of 3.23 m); 3,527,668 m\u00b2 added, 4,003,823 m\u00b2 removed. Breakdown: source_commission 35,857, geometric_disagreement 32,512, source_omission 21,416, positional_only 860, subdivision 610, amalgamation 408, no_change 306"
+    },
+    "confidence": {
+      "summary": "106,077 features, mean confidence 58.7% (grades C:51,878, D:54,199); 0.0% publishable without review; 54,199 need field verification; weakest dimension across the AOI is source_agreement at 33.5%",
+      "mean_components": {
+        "positional": 0.4196,
+        "source_agreement": 0.3346,
+        "topological": 0.9997,
+        "attribute_completeness": 0.4442,
+        "temporal_currency": 0.734,
+        "lineage_integrity": 1.0
+      },
+      "grades": {
+        "D": 54199,
+        "C": 51878
+      }
+    },
+    "publish": {}
+  },
+  "stage_seconds": {
+    "ingest": 9.87,
+    "schema_map": 0.55,
+    "reproject": 4.25,
+    "topology": 24.72,
+    "match": 141.16,
+    "cluster": 34.93,
+    "resolve": 11.68,
+    "assemble": 7.61,
+    "structures": 3.32,
+    "change": 1.26,
+    "confidence": 2.26,
+    "publish": 0.0
+  },
+  "outputs": {
+    "harmonised_parcels": 14614,
+    "harmonised_buildings": 91463,
+    "changes": 106648,
+    "adjudication_cases": 5000
+  },
+  "ledger": {
+    "entries": 20,
+    "verified": true,
+    "message": "chain intact over 20 entries",
+    "merkle_root": "74b11afd7cc1a5f588ed6749ccf66144153e092a8ad25e94252dec8737b6cec9"
+  }
+}

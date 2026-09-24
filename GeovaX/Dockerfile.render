@@ -1,0 +1,38 @@
+# Render deployment image for GEOVAX.
+#
+# Serves the FastAPI OGC API + harmonisation console (/map) straight from the
+# committed, precomputed pipeline output in deploy_data/ — no PostGIS, no
+# Redis, no worker. See backend/GeovaX/api/app.py: FeatureStore is a
+# file-backed reader designed exactly for this ("runnable straight after a
+# pipeline run with no database").
+#
+# Build context for this file is the repo's GeovaX/ subfolder (the one
+# containing backend/, frontend/, deploy_data/ as siblings) — set that as the
+# Render service's Root Directory.
+
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      gdal-bin libgdal-dev libgeos-dev libproj-dev proj-data git curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Python package (editable install so the /map path-resolution logic in
+# app.py, which walks up from its own __file__, keeps working unchanged).
+COPY backend/pyproject.toml backend/pyproject.toml
+COPY backend/GeovaX backend/GeovaX
+RUN pip install --no-cache-dir -e ./backend
+
+# Static console served by GET /map and /map-india.
+COPY frontend frontend
+
+# Precomputed harmonisation output the demo serves (trimmed: published
+# GeoJSON/JSON only, no multi-hundred-MB pipeline checkpoints).
+COPY deploy_data deploy_data
+
+ENV PYTHONUNBUFFERED=1 \
+    GEOVAX_OUT=/app/deploy_data/chennai_metro
+
+EXPOSE 8000
+CMD ["sh", "-c", "uvicorn GeovaX.api.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
