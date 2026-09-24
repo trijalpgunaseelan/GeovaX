@@ -8,7 +8,10 @@
 #
 # Build context for this file is the repo's GeovaX/ subfolder (the one
 # containing backend/, frontend/, deploy_data/ as siblings) — set that as the
-# Render service's Root Directory.
+# Render service's Root Directory. Single COPY . . on purpose: Render's
+# builder kept reusing a stale cache ref for a separate `COPY deploy_data`
+# step across rebuilds ("checksum of ref ...: not found"); copying the whole
+# (dockerignore-trimmed) context in one instruction sidesteps that.
 
 FROM python:3.11-slim
 
@@ -18,18 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Python package (editable install so the /map path-resolution logic in
-# app.py, which walks up from its own __file__, keeps working unchanged).
-COPY backend/pyproject.toml backend/pyproject.toml
-COPY backend/GeovaX backend/GeovaX
+COPY . .
 RUN pip install --no-cache-dir -e ./backend
-
-# Static console served by GET /map and /map-india.
-COPY frontend frontend
-
-# Precomputed harmonisation output the demo serves (trimmed: published
-# GeoJSON/JSON only, no multi-hundred-MB pipeline checkpoints).
-COPY deploy_data deploy_data
 
 ENV PYTHONUNBUFFERED=1 \
     GEOVAX_OUT=/app/deploy_data/chennai_metro
